@@ -19,6 +19,6 @@ new_row = zeros(1,5);
 eig_functions = [new_row; V];
 eig_functions = [eig_functions; new_row];
 for n = 1:5
-    eig_functions(1,n) = (4/2*.02*eig_functions(2,n) - 1/2*.02 * eig_functions(3,n))/(sqrt(16-solution_eigs(n)) + 3/2*.02);
+    eig_functions(1,n) = ((4/(2*.02))*eig_functions(2,n) - (1/(2*.02)) * eig_functions(3,n))/(sqrt(16-solution_eigs(n)) + 3/2*.02);
     eig_functions(end,n) = eig_functions(1,n);
 end
