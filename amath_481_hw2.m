@@ -7,12 +7,13 @@ off_diags = -1 * ones(1,length(x_interior) - 1)/.02^2;
 A_upper = diag(off_diags, 1);
 A_lower = diag(off_diags, -1);
 A = A + A_upper + A_lower;
-A(1,1) = 2/(3*.02^2) + 3.98^2;
+A(1,1) = 2/(3*(.02^2)) + 3.98^2;
 A(1,2) = -2/(3*.02^2);
 A(end,end) = 2/(3*.02^2) + 3.98^2;
 A(end, end - 1) = -2/(3*.02^2);
 [V,D] = eigs(A, 5, 'sm');
 solution_eigs = (diag(D));
+
 
 new_row = zeros(1,5);
 
@@ -23,21 +24,25 @@ for n = 1:5
     eig_functions(end,n) = eig_functions(1,n);
 end
 for n = 1:5
-    norm = trapz(xspan, eig_functions(:,n).^2);
+    norm = trapz(xspan, eig_functions(:,n).^2); % Think my norm is wrong?
     eig_functions(:,n) = eig_functions(:,n)/norm;
 end
 % plot(xspan, eig_functions(:,5))
-A1 = abs(eig_functions);
-A2 = solution_eigs';
+
+A1 = sortrows(abs(eig_functions)')';
+A2 = sort(solution_eigs);
 save A1.dat A1 -ascii
 save A2.dat A2 -ascii
+%plot(xspan, A1(:,5))
 
 %%
 clc; clear all; close all;
-delta_x = 13+1/3; delta_y = 8.5714;
-A = -2/delta_x^2 - 2/delta_y^2;
-B = 1/delta_x^2;
-C = 1/delta_y^2;
+% delta_x = 13+1/3; delta_y = 8.5714;
+% A = -2/delta_x^2 - 2/delta_y^2;
+% B = 1/delta_x^2;
+% C = 1/delta_y^2;
+% Thought I heard him say something about just using integers in class?
+A = -4; B = 1; C = 1;
 center_diag = A*ones(32,1);
 upper_1 = C * ones(32,1); 
 lower_1 = upper_1;
