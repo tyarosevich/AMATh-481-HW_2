@@ -22,8 +22,15 @@ for n = 1:5
     eig_functions(1,n) = (4/3)*eig_functions(2,n) - (1/3) * eig_functions(3,n);
     eig_functions(end,n) = eig_functions(1,n);
 end
-%plot(xspan, eig_functions(:,1))
-
+for n = 1:5
+    norm = trapz(xspan, eig_functions(:,n).^2);
+    eig_functions(:,n) = eig_functions(:,n)/norm;
+end
+% plot(xspan, eig_functions(:,5))
+A1 = abs(eig_functions);
+A2 = solution_eigs';
+save A1.dat A1 -ascii
+save A2.dat A2 -ascii
 
 %%
 clc; clear all; close all;
@@ -49,8 +56,8 @@ for n = 0:3
     M((n+1)*8 +1, 8*(n+2)) = C;
     end
 end
-    
-    
+A3 = M;
+save A3.dat A3 -ascii
     
     
     
