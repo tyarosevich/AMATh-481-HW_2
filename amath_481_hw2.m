@@ -7,7 +7,7 @@ off_diags = -1 * ones(1,length(x_interior) - 1)/.02^2;
 A_upper = diag(off_diags, 1);
 A_lower = diag(off_diags, -1);
 A = A + A_upper + A_lower;
-A(1,1) = 2/(3*(.02^2)) + 3.98^2;
+A(1,1) = 2/(3*.02^2) + 3.98^2;
 A(1,2) = -2/(3*.02^2);
 A(end,end) = 2/(3*.02^2) + 3.98^2;
 A(end, end - 1) = -2/(3*.02^2);
@@ -24,13 +24,14 @@ for n = 1:5
     eig_functions(end,n) = eig_functions(1,n);
 end
 for n = 1:5
-    norm = trapz(xspan, eig_functions(:,n).^2); % Think my norm is wrong?
-    eig_functions(:,n) = eig_functions(:,n)/norm;
+    norm = trapz(xspan, eig_functions(:,n).^2); % Norm correct?
+    eig_functions(:,n) = eig_functions(:,n)/sqrt(norm);
 end
-% plot(xspan, eig_functions(:,5))
-
-A1 = sortrows(abs(eig_functions)')';
-A2 = sort(solution_eigs);
+%plot(xspan, eig_functions(:,5))
+unsorted_A = [solution_eigs';eig_functions];
+sorted_A = sortrows(unsorted_A')';
+A1 = abs(sorted_A(2:end,:));
+A2 = sorted_A(1,:)';
 save A1.dat A1 -ascii
 save A2.dat A2 -ascii
 %plot(xspan, A1(:,5))
