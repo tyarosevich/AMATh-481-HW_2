@@ -21,7 +21,7 @@ eig_functions = [new_row; V];
 eig_functions = [eig_functions; new_row];
 for n = 1:5
     eig_functions(1,n) = (4/3)*eig_functions(2,n) - (1/3) * eig_functions(3,n);
-    eig_functions(end,n) = eig_functions(1,n);
+    eig_functions(end,n) = (4/3) * eig_functions(end - 1,n) - (1/3) * eig_functions(end -2 ,n);
 end
 for n = 1:5
     norm = trapz(xspan, eig_functions(:,n).^2); % Norm correct?
